@@ -18,7 +18,7 @@ public class AddressBookDaoImpl implements AddressBookDao {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", 
-					"C##BITUSER", "USER");
+					"C##BITUSER", "BITUSER");
 		} catch (ClassNotFoundException e) {
 			System.err.println("드라이버 로드 실패");
 			e.printStackTrace();
@@ -106,15 +106,16 @@ public class AddressBookDaoImpl implements AddressBookDao {
 		
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement("SELECT name, hp, tel FROM phone_book WHERE name LIKE ?");
+			pstmt = conn.prepareStatement("SELECT no, name, hp, tel FROM phone_book WHERE name LIKE ?");
 			pstmt.setString(1, "%"+keyword+"%");
 			
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				String name = rs.getString(1);
-				String hp = rs.getString(2);
-				String tel = rs.getString(3);
+				Long no = rs.getLong(1);
+				String name = rs.getString(2);
+				String hp = rs.getString(3);
+				String tel = rs.getString(4);
 				
 				AddressVo vo = new AddressVo();
 				list.add(vo);
@@ -134,7 +135,7 @@ public class AddressBookDaoImpl implements AddressBookDao {
 		}
 	
 	@Override
-	public int delete(Long keyword) {
+	public int delete(Long pk) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int deletedCount = 0;
@@ -142,9 +143,9 @@ public class AddressBookDaoImpl implements AddressBookDao {
 		try {
 			conn = getConnection();
 			
-			pstmt = conn.prepareStatement("DELETE FROM phone_book WHERE id = ?");
+			pstmt = conn.prepareStatement("DELETE FROM address_book WHERE no = ?");
 			pstmt.setLong(1, deletedCount);
-			pstmt.setLong(1, keyword);
+			pstmt.setLong(1, pk);
 			
 			deletedCount = pstmt.executeUpdate();
 		} catch (SQLException e) {

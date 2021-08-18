@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" %>
 
-
 <!DOCTYPE html>
 <html>
 
@@ -26,7 +25,9 @@ td, th{border:2px solid red;width:100px;height:20px;text-alingn:center}</style>
 		<td>구분</td>
 	</tr>
 	</table>
-	<p><a href="<%= request.getContextPath() %>/ad?a=index">새 주소 추가</a></a>
+	<p>
+	<a href="<%= request.getContextPath() %>/ad?a=index">새 주소 추가</a>
+	</p>
 </body>
 
 </html>

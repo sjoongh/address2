@@ -13,7 +13,6 @@ public class LifeCycleServlet extends HttpServlet {
 		System.out.println("init() 메서드 호출");
 		
 		ServletContext context = getServletContext();
-		//	컨텍스트 파라미터 받아오기
 		String dbuser = context.getInitParameter("dbuser");
 		String dbpass = context.getInitParameter("dbpass");
 		
@@ -32,7 +31,6 @@ public class LifeCycleServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("doGet() 메서드 호출");
 		
-		//	서블릿 초기화 파라미터 받아오기
 		ServletConfig config = getServletConfig();
 		String servletParam = config.getInitParameter("servlet-param");
 		System.out.println("서블릿 초기화 파라미터:" + servletParam);

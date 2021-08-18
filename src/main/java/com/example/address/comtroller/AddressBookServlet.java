@@ -23,15 +23,15 @@ public class AddressBookServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String actionName = req.getParameter("a");
 		
-		if ("form".equals(actionName)) {
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/views/address/form.jsp");
+		if ("index".equals(actionName)) {
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/views/address/index.jsp");
 			rd.forward(req, resp);
 		} else {
 			AddressBookDao dao = new AddressBookDaoImpl();
 			List<AddressVo> list = dao.getList();
 			req.setAttribute("list", list);
 			
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/views/address/index.jsp");
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/views/address/form.jsp");
 			rd.forward(req, resp);
 		}
 	}
@@ -54,12 +54,10 @@ public class AddressBookServlet extends HttpServlet {
 			int insertedCount = dao.insert(vo); 
 			
 			resp.sendRedirect(req.getContextPath() + "/ad");
-//		} else if ("delete".equals(actionName)) {
-//			Long no = Long.valueOf(req.getParameter("no"));
-//			
-//			AddressBookDao dao = new AddressBookDaoImpl();
-//			int deletedCount = dao.delete(no);
-//			
+		} else if ("delete".equals(actionName)) {
+			Long no = Long.valueOf(req.getParameter("no"));
+			AddressBookDao dao = new AddressBookDaoImpl();
+			int deletedCount = dao.delete(no);
 			resp.sendRedirect(req.getContextPath() + "/ad");
 		} else {
 			doGet(req, resp);
